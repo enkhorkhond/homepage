@@ -2,31 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Personal Web Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Dynamic Page</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #f0f8ff;
-      padding: 50px;
-    }
-    h1 {
-      color: #007acc;
-    }
-    p {
-      font-size: 18px;
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f7f9fb;
       color: #333;
     }
-    a {
+    h2 {
       color: #007acc;
-      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <h1>Hello, I'm Your Name!</h1>
-  <p>Welcome to my personal web page hosted on GitHub Pages.</p>
-  <p>Feel free to <a href="mailto:your@email.com">contact me</a>.</p>
+
+  <h1>👋 Welcome to My Dynamic Web Page</h1>
+
+  <!-- Example 1: Clock -->
+  <h2>⏰ Current Time</h2>
+  <p id="clock">Loading time...</p>
+
+  <!-- Example 2: Weather -->
+  <h2>🌦️ Weather in Ulaanbaatar</h2>
+  <p id="weather">Loading weather...</p>
+
+  <!-- Example 3: Load content from data.json -->
+  <h2 id="title">Loading title...</h2>
+  <p id="message">Loading message...</p>
+
+  <script>
+    // Example 1: Clock
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Example 2: Weather (requires your own OpenWeatherMap API key)
+    const API_KEY = "your_api_key_here"; // ← Replace with your real API key
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=Ulaanbaatar&units=metric&appid=${API_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("weather").textContent =
+          `${data.weather[0].description}, ${data.main.temp}°C`;
+      })
+      .catch(() => {
+        document.getElementById("weather").textContent = "Weather data not available.";
+      });
+
+    // Example 3: Load from data.json
+    fetch("data.json")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("title").textContent = data.title;
+        document.getElementById("message").textContent = data.message;
+      });
+  </script>
+
 </body>
 </html>
